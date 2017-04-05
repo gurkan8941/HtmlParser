@@ -60,10 +60,9 @@ namespace ParserPrisjakt
             html.LoadHtml(startHtml);
 
             var products = html.GetElementbyId("result-products");
-            var productTiles = products.Descendants("div").Where(d => d.Attributes["class"].Value.Contains(productTileClass)).ToList();
+            var productTiles = products.GetElementWithClass(productTileClass).ToList();
 
-            var productInnerTiles = productTiles.SelectMany(s => 
-                s.Descendants("div").Where(d => d.Attributes["class"].Value.Contains("grid-item-inner"))).ToList();
+            var productInnerTiles = productTiles.SelectMany(s => s.GetElementWithClass("grid-item-inner")).ToList();
 
             var productLinks = productInnerTiles.Select(e => e.Descendants("a").FirstOrDefault()).Select(e => e.Attributes["href"].Value).ToList();
 
